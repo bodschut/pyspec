@@ -625,7 +625,10 @@ class SpecScan:
                         self.data = datum
                     else:
                         self.data = vstack((self.data, datum))
-
+            elif line[0] == '@':
+                # External data format, try using the extensions
+                for ext in specfile.userExtensions:
+                    ext.parseSpecScanDataLine(self, line)
             elif line[0:2] == '#C':
                 self.comments = self.comments + line
             else:
